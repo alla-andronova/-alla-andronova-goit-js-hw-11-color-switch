@@ -17,8 +17,22 @@ const refs = {
   body: document.querySelector('body'),
 };
 
+let timerId = null;
+let isActiveStartBtn = false;
+
 const onstartBtnClick = () => {
-  refs.body.style.backgroundColor = colors[randomIntegerFromInterval(2, 2)];
+  if (isActiveStartBtn) {
+    return;
+  }
+  isActiveStartBtn = true;
+  timerId = setInterval(() => {
+    refs.body.style.backgroundColor =
+      colors[randomIntegerFromInterval(0, colors.length - 1)];
+  }, 1000);
 };
 
 refs.startBtn.addEventListener('click', onstartBtnClick);
+refs.stoptBtn.addEventListener('click', () => {
+  clearInterval(timerId);
+  isActiveStartBtn = false;
+});
